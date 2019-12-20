@@ -1,0 +1,91 @@
+//------------------------------------------------------------------- Anotações -> aula de NodeJS, ReactNative e ReactJS -------------------------------------------------------------------
+
+INSTALAR:
+
+ctrl + shift + p -> aba de pesquisa para abrir settings
+
+VSCode -> colocar tema drácula, material icon theme e snippets da rocketseat;
+node, npm e yarn -> usando chocolatey -> cinst nodejs.install e choco install yarn;
+yarn add nomeDaDependencia -> ver dependencias no arquivo package.json;
+
+
+//------------------------------------------------------------------------------------------------------ BACKEND
+
+Após preparar o ambiente com: Node, npm (node package manager) e yarn, escolher uma plataforma de desenvolvimento -> No caso, o VSCode. Após todo o preparo do ambiente, o projeto deve ser inicializado utilizando o seguinte comando: yarn init -y -> Esse comando inicializará nosso projeto e possui algumas predefinições já de origem e será no arquivo que ele gera (package.json) que serão inseridas as dependências do projeto.
+
+//----------- Criando página inicial -> index.json
+
+é criado uma constante express, que seria de uma dependencia instalada no projeto, para definir que esse documento requer aquela dependência. Após isso, é criado uma constante app que chama a função express(), que será a representação da nossa aplicação. app.listen(3333) define a porta 3333 para aquela página (index.js). app.get('/', (req, res) => define que o caminho para aquela página é o /, que faz com que simplesmente ao acessar localhost:3333 abra essa página. req e res são de um middleware do express, que representa requisição e resposta. SEMPRE uma função que utilize esse middleware irá retornar um res e receber (caso receba algo) um req.
+
+routes.get('/', (req, res) => {
+    return res.send(`Olá ${req.query.name}`);
+})
+
+//----------- Dependência de DESENVOLVIMENTO nodemon
+
+Uma boa ferramenta para se instalar em desenvolvimento apenas, onde deixa de ser necessário reiniciar manualmente o servidor node. Após rodar o servidor através de um script criado no package json de nome dev, toda vez que houver alteração no código o servidor será reiniciado. instalada através de yarn add nodemon -D;
+
+//----------- Base de dados usada: MongoDB
+
+Para usar a base de dados MongoDB (não relacional) foi criado através do site MongoDB Atlas. O link de conexão pode ser obtido lá e é necessário instalar a dependencia mongoose -> yarn add mongoose
+
+
+//----------- Criação dos arquivos controllers de Post e Like
+
+A criação desses arquivos e suas respectivas rotas está bem clara no projeto desenvolvido.
+
+//----------- Dependência para editar o size da imagem
+
+adicionada dependência sharp para poder fazer resize na imagem -> yarn add sharp
+
+
+//------------------------------------------------------------------------------------------------------ FRONTEND
+
+yarn create react-app frontend -> sendo frontend o nome do projeto; Cria app react;
+
+create react-app é um template de criação de projetos react -> bom utilizar, por conta do react ser lido pelos navegadores e o javascript avançar mais rapidamente na tecnologia do que os leitores de js dos navegadores -> cria arquivos que ajuda na compatibilidade -> traz o babel, webpack -> responsáveis por compilar o js das versões mais novas para versões antigas
+
+ÚNICO CÓDIGO HTML QUE IMPORTA PARA O REACT -> <div id = "root></div> -> é a div que ele identifica e insere todo o código html gerado;
+
+index -> importa react para usar a sintaxe jsx -> javascript + xml -> mesma coisa que o html;
+
+react-dom -> integração do react com o browser;
+
+componente -> arquivo javascript que tem por obrigação retornar um conteúdo jsx; -> pode ser classe ou função -> possui diferenças específicas -> definição simples: trecho de código que se pode isolar da aplicação; -> É um conjunto isolado de código estruturado (html), estilização (css) ou regra de negócio (js);
+
+***A partir do momento que se utiliza o react como framework de interface do frontend -> TUDO JAVASCRIPT -> NADA DIRETAMENTE HTML
+
+sempre que for necessário inserir código javascript no html -> basta usar {} no react
+
+a única forma de armazenar uma informação no react é com classe e precisa ser criado um estado (basicamente, é uma variável dentro de um componente que guarda as informações) -> toda a vez que for necessário armazenar uma informação dentro de um componente que, ao ser alterada, é necessário refletir as alterações num html, utiliza-se o estado!
+
+sempre que usar map para percorrer algum vetor -> adicionar uma propriedade key no primeiro elemento logo após a chamada do método map -> faz o react encontrar mais rápido os elementos alterados, excluídos ou adicionados na árvore de objetos.
+
+quando se cria uma função (método) dentro da classe react utiliza-se o formato de arrow function e não do react, pois quando se está criando uma função própria na classe react (não usando uma que já existe), sem o formato arrow não é possível acessar o valor this!
+
+Para passar uma função como referência a outra no react, e não somente executar, é necessário usar arrow function ( () => ) antes da chamada à função com this, assim, ao invés de executar a função, ele passará a referência para a outra.
+
+//================================== REACT NATIVE
+
+METRO BUNDLER -> FAZ BUNDLE DA APLICAÇÃO -> Une os arquivos JS em um único arquivo para enviar ao emulador. É esse arquivo que o emulador entende e le para executar a api.
+
+App.js é o documento padrão do projeto;
+
+usa tags específicas do react-native ao invés do html -> estilização é feita via tag style que recebe um objeto de argumento (criado em uma constante no documento utilizando a classe StyleSheet do react-native e o método create, que utiliza uma ferramenta chamada yoga, responsável por converter a sintaxe do CSS para a estilização nativa -> tanto do java, quanto do objective C -> que permite usar uma sintaxe muito parecida com o css nessa constante) e não com classes ou id's; View = div, Text = serve para qualquer texto.
+
+react-navigation e react-native-gesture-handler -> necessário para navegação no projeto react-native -> react-native-gesture-handler precisa de alguns links nas bibliotecas nativas, tanto do iOS quanto do android e, para isso, é necessário utilizar o comando: react-native link nomeDaBiblioteca -> PS: o autolinking suporta essa biblioteca, basta adicionar "postinstall": "npx jetify" ao arquivo packages.json na parte de scripts e rodar yarn install no projeto (após adicionar a biblioteca). Após isso, rebuildar a aplicação. -> PS2: a partir da versão 4.0 do react-navigation, é necessário adicionar o react-navigation-stack para usar funções como, por exemplo, o createStackNavigator.
+
+createStackNavigator -> cria um header automaticamente e uma navegação em pilha -> utiliza um botão para acessar outra página -> outros navigators: createBottomNavigator (botões em baixo), createSwitchNavigator(sem resultado visual), createDrawerNavigator(ao arrastar a tela, gera menu lateral);
+
+react-native tem a capacidade de ler automaticamente o tamanho da imagem a ser utilizada de acordo com a tela do usuário (Se as imagens estiverem "tagadas" com @2x, @3x no nome);
+
+navigationOptions => pode retornar um objeto diretamente, ou uma função que retornará o objeto. com parenteses, para retornar o objeto diretamente e n achar que a chave faz referencia ao corpo da função e como parametro da função é possível acessar uma propriedade chamada navigation através de desestruturação, para utilizá-lo para navegar o usuário para a próxima página.
+
+Elemento de lista pronto do react-native: FlatList -> recebe propriedade data (dados que serão reenderizados), normalmente contidos num state; keyExtractor -> o que seria o key do map no react, que vai receber cada item (post) do feed e retornar o id de cada um; renderItem -> retorna conteúdo jsx de cada 1 dos posts.
+
+todos os elementos já vem com display:flex por padrão -> por não possuir float left no react-native.
+
+DIFERENTE DO WEB -> NÃO NECESSITA DO MÉTODO handleChange para lidar com todas os onChange do input, pois o input do react-native possui o onChangeText, que permite setar diretamente o state com o texto digitado.
+
+base64 -> forma de escrita em texto do conteúdo da imagem;
+
